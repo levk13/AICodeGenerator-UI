@@ -2,22 +2,18 @@
   <div id="app">
 
   <div>
-    <AICodeGeneratorJira/>
+    <LoginVue/>
   </div>
   </div>
 </template>
 
 <script>
-// import AdminControlPanel from '../components/AdminControlPanel.vue'
-// import TradeEvents from '../components/TradeEvents.vue'
-// import MarketInformation from '../components/MarketInformation.vue'
-  import AICodeGeneratorJira from '../components/AICodeGeneratorJira.vue'
-
-
+import LoginVue from '../components/Login.vue'
+  
 export default {
-  name: 'App',
+  name: 'Home',
   components: {
-    AICodeGeneratorJira
+    LoginVue
   }
 }
 

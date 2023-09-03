@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import http from '../http-common'
 export default {
   name: 'AICodeGeneratorJira',
 
@@ -42,7 +43,7 @@ methods: {
 
 
   async populateJiraItems(){
-      const response = await this.$http.get("/processingApi/getJiraItems");
+      const response = await http.get("/processingApi/getJiraItems");
        for (var i = 0; i < response.data.length; i++){
           var issue =  response.data[i]
           this.jiraItems.push(issue)
@@ -56,7 +57,7 @@ methods: {
     async run() {
          try{
          this.runResult = 'Running Test for Selected Item: ' + this.selectedJiraItem 
-          const response = await this.$http.get("/processingApi/runTest?issue="  + this.selectedJiraItem);      
+          const response = await http.get("/processingApi/runTest?issue="  + this.selectedJiraItem);      
           this.runResult = response.data
           console.log(response)
         } 
@@ -64,22 +65,10 @@ methods: {
             this.runResult = "A Processing Error has occured, please check the logs for further details."
           }
     },
-
-    async submitTradeClick () {
-      const fullsymbol =  this.symbol + '_' + this.expirationDate + this.callput + this.strike
-      const payload = {stopLoss: this.stoplossBinding, symbol: fullsymbol, underlying: this.symbol };
-
-     try {
-         await this.$http.post("/trading/submittrade", payload);
-        // JSON responses are automatically parsed.
-      //  console.log(response);
-      } catch (error) {
-      //  console.log(error);
-      }
      
   }
 }
-}
+
 </script>
 
 <style>

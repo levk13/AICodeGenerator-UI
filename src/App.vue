@@ -1,6 +1,8 @@
 <template>
+
   <div id="app">
-   <br><br>
+    <br><br>
+
    <img alt="Scigon Labs" src="./assets/ScigonLabsLogo.svg">
    
      <br>
@@ -8,8 +10,9 @@
          <img alt="Scigon Labs" src="./assets/AILogo.svg">  
            <p id="texts">Test Automation Framework</p>
      </div>             
-<router-view/>
-  </div>
+     <router-view/>
+     
+    </div>
 </template>
 
 <style>

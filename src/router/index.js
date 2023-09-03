@@ -1,21 +1,33 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import { createWebHistory, createRouter, isNavigationFailure } from "vue-router";
+import AICodeGeneratorJira from '../views/AICodeGeneratorJira';
+import Home from '../views/Home';
 
-Vue.use(VueRouter)
+
 
 const routes = [
+ {
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/testrunner",
+    name: "Testrunner",
+    component: AICodeGeneratorJira,
   }
-]
+];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+const router = createRouter({
+    history: createWebHistory(),
+    routes
 })
 
-export default router
+router.afterEach((to, from, failure) => {
+    console.log('to: ', to);
+    console.log('from: ', from);
+    if (isNavigationFailure(failure)) {
+      console.log('failed navigation', failure)
+    }
+  })
+
+  export default router 
