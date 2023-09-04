@@ -1,6 +1,6 @@
 <template>
   <div id="jiraPage">
-   
+    
 
     <div id="panelDiv"> 
       
@@ -40,6 +40,7 @@ created() {
   },
 
 methods: {
+
 
 
   async populateJiraItems(){

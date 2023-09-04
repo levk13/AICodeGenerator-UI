@@ -1,6 +1,9 @@
 <template>
 
   <div id="app">
+    <div v-if="loggedIn"> 
+      <LoggedUserheader></LoggedUserheader>
+      </div>
     <br><br>
 
    <img alt="Scigon Labs" src="./assets/ScigonLabsLogo.svg">
@@ -14,6 +17,29 @@
      
     </div>
 </template>
+
+<script>
+import LoggedUserheader from './components/LoggedUserheader.vue';
+export default {
+  components: {
+    LoggedUserheader
+  },
+  data() {
+  return {
+
+  }
+},
+computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
+ }
+,
+}
+
+
+
+</script>
 
 <style>
 @import url(http://fonts.googleapis.com/icon?family=Material+Icons);

@@ -1,19 +1,17 @@
-
+import http from '../http-common'
 class AuthService {
     login(user) {
-      // return  this.$http.post('user/login', {
-      //     username: user.username,
-      //     password: user.password
-      //   })
-      //   .then(response => {
-      //  //   if (response.data.accessToken) {
-      //       localStorage.setItem('user', JSON.stringify(response.data));
-      // //    }
-      //     return response.data;
-      //   });
-    
-      localStorage.setItem('user', JSON.stringify(user));
-      return user;
+      return  http.post('userApi/login', {
+          email: user.username,
+          password: user.password
+        })
+        .then(response => {
+       //   if (response.data.accessToken) {
+          console.log(response.data)  
+          localStorage.setItem('user', JSON.stringify(response.data));
+      //    }
+          return response.data;
+        });
     }
   
     logout() {

@@ -64,16 +64,16 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push("/profile");
+      this.$router.push("/testrunner");
     }
   },
   methods: {
     handleLogin(user) {
       this.loading = true;
-
+      console.log(user)
       this.$store.dispatch("auth/login", user).then(
         () => {
-          this.$router.push("/profile");
+          this.$router.push("/testrunner");
         },
         (error) => {
           this.loading = false;
