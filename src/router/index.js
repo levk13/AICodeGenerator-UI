@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter, isNavigationFailure } from "vue-router";
 import AICodeGeneratorJira from '../views/AICodeGeneratorJira';
 import Home from '../views/Home';
-
+import store from '@/store/index';
 
 
 const routes = [
@@ -14,8 +14,20 @@ const routes = [
     path: "/testrunner",
     name: "Testrunner",
     component: AICodeGeneratorJira,
-  }
+    beforeEnter(to, from, next) {
+        if (store.state.auth.status.loggedIn) {
+            next();
+          }
+         else {
+          next('/');
+        }
+      }
+
+}
 ];
+
+
+
 
 const router = createRouter({
     history: createWebHistory(),
