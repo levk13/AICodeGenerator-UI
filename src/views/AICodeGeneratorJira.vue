@@ -1,20 +1,26 @@
 <template>
   <div id="jiraPage">
     
-
     <div id="panelDiv"> 
       
          <div id="runPan">
-            <select  v-model="selectedJiraItem" id="jiraItems">
+            <!-- <select  v-model="selectedJiraItem" id="jiraItems">
                 <option value="" disabled hidden>Select Issue</option>
               <option v-for="name in jiraItems" :key="name" :value="name">{{ name }}</option>
-           </select>
+           </select> -->
+           <VueMultiselect v-model="selectedJiraItems" :options="jiraItems " 
+           :multiple="true"  :close-on-select="true"  placeholder="Select Test Items:"></VueMultiselect >
+        
           <button  v-on:click="run" id="runbutton">Run</button>
           <button  v-on:click="clear" id="clearButton">Clear</button>
          </div>
 
     <samp id="samp">
-      <p>{{runResult}}</p>
+      <p v-for="(item, index) in runResult" v-bind:key="index">
+        {{item}}
+      </p>
+      
+     
     </samp>
 
     </div>
@@ -25,14 +31,20 @@
 
 <script>
 import http from '../http-common'
+import VueMultiselect from 'vue-multiselect'
+ 
 export default {
   name: 'AICodeGeneratorJira',
+
+  components: {
+    VueMultiselect 
+  },
 
 data() {
   return {
      jiraItems : [],
-     selectedJiraItem : '',
-     runResult : 'No Run Results...'
+     selectedJiraItems : [],
+     runResult : ['No Active Test Results...']
   }
 },
 created() {
@@ -52,27 +64,88 @@ methods: {
   },
 
   clear(){
-    this.runResult = 'No Run Results...'
+    this.runResult = ['No Active Test Results...']
   },
 
     async run() {
-         try{
-         this.runResult = 'Running Test for Selected Item: ' + this.selectedJiraItem 
-          const response = await http.get("/processingApi/runTest?issue="  + this.selectedJiraItem);      
-          this.runResult = response.data
-          console.log(response)
-        } 
-          catch (error) {
-            this.runResult = "A Processing Error has occured, please check the logs for further details."
+      this.runResult = []
+      for (var i = 0; i < this.selectedJiraItems.length; i++){
+          try{
+              var selectedItem = this.selectedJiraItems[i];
+              this.runResult.push('Running Test for Selected Item: ' + selectedItem)
+              const response = await http.get("/processingApi/runTest?issue="  +selectedItem);      
+              this.runResult.push(response.data)
+            
           }
+          catch (error) {
+            this.runResult.push("A Processing Error has occured, please check the logs for further details.")
+          }
+        
+        }
     },
      
   }
 }
 
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 
 <style>
+
+
+.multiselect {
+max-height: 20px;
+margin-right: 10px;
+}
+
+
+.multiselect__select{
+  margin-right: 10px;
+
+
+}
+
+.multiselect__tag {
+  width: 100px;
+  background-color: #25BCEF;
+}
+
+
+/* .multiselect__tag {
+  color: rgb(48, 48, 48);
+  background-color: rgba(var(--vs-primary), 0.3);
+  font-size: 01rem;
+}
+.multiselect__tag:hover {
+  background-color: rgba(var(--vs-warning), 0.3);
+}
+
+
+.multiselect__option--highlight {
+  background-color: rgba(var(--vs-primary), 1);
+  color: rgb(255, 255, 255);
+  font-size: 0.9rem;
+  height: 1rem;
+}
+
+//drop down content area.
+.multiselect__content {
+  background: rgb(255, 255, 255);
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.multiselect__tag {
+  position: relative;
+  display: inline-block;
+  padding: 0.25rem 1.625rem 0.25rem 0.625rem;
+
+  margin-right: 0.625rem;
+
+  line-height: 1;
+
+  margin-bottom: 0.5rem;
+} */
 
 
 #samp {
