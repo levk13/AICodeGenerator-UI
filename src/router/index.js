@@ -2,7 +2,7 @@ import { createWebHistory, createRouter, isNavigationFailure } from "vue-router"
 import AICodeGeneratorJira from '../views/AICodeGeneratorJira';
 import Home from '../views/Home';
 import store from '@/store/index';
-
+import KeywordPrompt from '../views/KeywordPrompt'
 
 const routes = [
  {
@@ -23,7 +23,22 @@ const routes = [
         }
       }
 
+},
+{
+  path: "/prompthelper",
+  name: "prompthelper",
+  component: KeywordPrompt,
+  beforeEnter(to, from, next) {
+      if (store.state.auth.status.loggedIn) {
+          next();
+        }
+       else {
+        next('/');
+      }
+    }
+
 }
+
 ];
 
 
