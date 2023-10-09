@@ -1,19 +1,19 @@
 <template>
   <div id="app">
 
-  <div>
-    <LoginVue/>
+  <div id="div">
+    <LoginOld id="login" />
   </div>
   </div>
 </template>
 
 <script>
-import LoginVue from '../components/Login.vue'
+import LoginOld from '../components/LoginOld.vue'
   
 export default {
   name: 'Home',
   components: {
-    LoginVue
+    LoginOld
   }
 }
 
@@ -35,6 +35,34 @@ fieldset {
   border: 0;
 }
 
+#login {
+    position: fixed;
+    /* center the element */
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
 
+    margin-top: 40px;
+    /* give it dimensions */
+    min-height: 10em;
+    width: 40%;
+  }
+
+  #div { 
+    background-color: inherit
+  
+  }
+
+  #runbutton {
+border-radius: 2px;
+background: #25BCEF;
+display: flex;
+padding: 12px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+margin-right: 10px;
+}
 
 </style>

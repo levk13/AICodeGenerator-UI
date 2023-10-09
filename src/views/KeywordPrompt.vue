@@ -1,7 +1,14 @@
 <template>
     <div id="jiraPage">
-        
-        <div id="panelDiv">
+     
+      <div class="d-flex">
+      <button v-on:click="manageVisibility('test')" id="runbutton">Run Test </button>  
+      <button v-on:click="manageVisibility('add')" id="runbutton">Add New</button>  
+      </div>
+
+      <InPageModal :open="isOpen">
+      
+        <div id="panelDiv" v-if="isTestVisible" >
         <select  v-model="selectedItem" id="jiraItems">
                 <option value="" disabled hidden>Select Issue</option>
               <option v-for="name in jiraItems" :key="name" :value="name">{{ name }}</option>
@@ -9,21 +16,23 @@
            <button v-on:click="run()"  id="runbutton">Run Prompt Test</button>
 
            <textarea rows="10" cols="100" v-model="promptResponse">
-
            </textarea>
-
+           <button v-on:click="handleModalClosed()">Close</button>   
+        </div>
+       
+        <div id="panelDiv" v-if="isAddNewVisible" >
            <div> 
             <label>Key:</label>
             <input type="text" v-model="addingKey" >
             <label>Value:</label>
             <input type="text" v-model="addingValue">
             <button  v-on:click="add_record()">Add New </button>   
-
+            <button  v-on:click="handleModalClosed()">Cancel </button>   
            </div>
-
         </div>
-       
-        <div id="table-wrapper">
+
+      </InPageModal> 
+        <div id="table-wrapper"  v-if="isGridVisible" >
         <div id="table-scroll">
         <table class="table table-bordered table-striped">
             <thead>
@@ -64,11 +73,17 @@
   <script>
   import http from '../http-common'
   import "bootstrap/dist/css/bootstrap.min.css";
+  import InPageModal from '../components/InPageModal.vue';
+  import {ref} from "vue";
 
   export default {
     name: 'KeywordPrompt',
-  
+    components: {InPageModal},
  
+  setup(){
+    const isOpen = ref(false);
+    return {isOpen}
+  },
   
   data() {
     return {
@@ -77,7 +92,10 @@
         selectedItem : '',
         promptResponse : '',
         addingKey : '',
-        addingValue : ''
+        addingValue : '', 
+        isGridVisible: true,  
+        isAddNewVisible: false, 
+        isTestVisible: false
     }
   },
   created() {
@@ -87,6 +105,28 @@
   
   methods: {
   
+    handleModalClosed(){
+        this.isOpen = false;
+        this.isGridVisible =  true,  
+        this.isAddNewVisible= false, 
+        this.isTestVisible= false
+    },
+
+
+    manageVisibility(clickBy){
+      this.isOpen = true;
+      this.isGridVisible = false;
+      if(clickBy== "test"){
+        this.isTestVisible = true; 
+        this.isAddNewVisible = false;
+      }
+      else {
+        this.isTestVisible = false; 
+        this.isAddNewVisible = true;
+      }
+    },
+
+
     async populateJiraItems(){
       const response = await http.get("/processingApi/getJiraItems");
        for (var i = 0; i < response.data.length; i++){
@@ -136,6 +176,7 @@
          this.addingKey = ''; 
          this.addingValue = '';
          this.loadPromptKeywords();
+         this.handleModalClosed();
       }
        
     }
@@ -195,7 +236,6 @@
   justify-content: space-between;
   align-items: flex-start;
   }
-  
   
   
   #runbutton {
@@ -279,7 +319,7 @@ height: 42px;
   position:relative;
 }
 #table-scroll {
-  height:450px;
+  height:650px;
   overflow:auto;  
   margin-top:20px;
 }

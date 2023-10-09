@@ -1,7 +1,7 @@
 <template>
 
   <div id="app">
-    <div v-if="loggedIn"> 
+    <div id="AIHeader" v-if="loggedIn"> 
       <LoggedUserheader></LoggedUserheader>
       </div>
     <br><br>
@@ -9,9 +9,12 @@
    <img alt="Scigon Labs" src="./assets/ScigonLabsLogo.svg">
    
      <br>
-     <div id="AIHeader">
+     <div >
          <img alt="Scigon Labs" src="./assets/AILogo.svg">  
            <p id="texts">Test Automation Framework</p>
+
+       
+
      </div>             
      <router-view/>
      
@@ -81,9 +84,8 @@ line-height: normal;
 }
 
 #AIHeader {
-  display: inline-flex;
-justify-content: center;
-align-items: center;
+  margin: 0 !important;
+  max-width: 100%;
 gap: 8px;
 }
 
