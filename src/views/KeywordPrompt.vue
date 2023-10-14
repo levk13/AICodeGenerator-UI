@@ -41,6 +41,7 @@
                     <th>Value</th>
                     <th>Edit</th>
                     <th>Save</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
         <tbody>
@@ -61,6 +62,11 @@
                 <td>
                     <button id="runbutton" v-on:click="saveRow(row)">save</button>
                 </td>
+                <td>
+                    <button id="runbutton" v-on:click="deleteRow(row)">Delete</button>
+                </td>
+
+
 
             </tr>
         </tbody>   
@@ -154,7 +160,12 @@
         row.isEditMode = !row.isEditMode;
     },
  
-  
+    async deleteRow(row){
+        console.log(row)
+         await http.delete("/promptApi/delete?id="  +row.data.id);    
+         this.loadPromptKeywords();
+    },
+ 
       async run() {
         this.runResult = []
             try{
