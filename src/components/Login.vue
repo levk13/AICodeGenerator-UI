@@ -11,6 +11,12 @@
   <label for="floatingPassword">Password</label>
 </div>
 
+
+<div class="form-floating">
+  <input v-model="user.key" type="text" class="form-control" id="floatingInput" placeholder="License Key">
+  <!-- <label for="floatingPassword">License Key</label> -->
+</div>
+
 <div  id="center">
     <button  class="btn btn btn-light btn-lg" type="submit">Submit</button>  
  

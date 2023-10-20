@@ -3,7 +3,7 @@ class AuthService {
     login(user) {
       return  http.post('userApi/login', {
           email: user.username,
-          password: user.password
+          password: user.password, 
         })
         .then(response => {
        //   if (response.data.accessToken) {
@@ -14,8 +14,15 @@ class AuthService {
         });
     }
   
-    logout() {
-      localStorage.removeItem('user');
+    logout(id) {
+      console.log(id)
+      return  http.post('userApi/logout', {
+        id: id,
+      })
+      .then(response => {
+        console.log(response);
+        localStorage.removeItem('user');
+      });
     }
   
   //   register(user) {

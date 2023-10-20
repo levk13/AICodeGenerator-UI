@@ -2,15 +2,18 @@
 
       <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-floating mb-3">
-          <label for="username">Email</label>
-          <Field name="username" type="text" class="form-control" id="floatingInput" placeholder="email" />
+  
+          <div class="form-group">
+          <Field name="username" type="text" class="form-control" id="floatingInput" placeholder="Email" />
           <ErrorMessage name="username" class="error-feedback" />
-        </div>
+          </div>
+          <br/>
         <div class="form-group">
           <Field name="password" type="password" class="form-control" id="floatingInput" placeholder="Password"/>
           <ErrorMessage name="password" class="error-feedback" />
         </div>
-
+        
+    
         <div id="center">
           <button  class="btn btn btn-light btn-lg"  :disabled="loading">
             <span
@@ -20,11 +23,11 @@
             <span>Login</span>
           </button>
         </div>
-
         <div class="form-group">
           <div v-if="message" class="alert alert-danger" role="alert">
             {{ message }}
           </div>
+        </div>
         </div>
       </Form>
 </template>

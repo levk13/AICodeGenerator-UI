@@ -38,13 +38,13 @@ export default {
     computed: {
     first_name() {
         return this.$store.state.auth.user.first_name;
-    }
+    }, 
  },
 
 methods: {
   handleLogout(){
-    this.$store.dispatch("auth/logout")
-    this.$router.push("/");
+    this.$store.dispatch("auth/logout", this.$store.state.auth.user.id)
+    this.$router.push("/")
   },
   
   routeToTestRunner(){
