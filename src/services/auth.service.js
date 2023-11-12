@@ -9,6 +9,7 @@ class AuthService {
        //   if (response.data.accessToken) {
           console.log(response.data)  
           localStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.setItem('auth', response.data.auth_token)
       //    }
           return response.data;
         });
@@ -22,6 +23,7 @@ class AuthService {
       .then(response => {
         console.log(response);
         localStorage.removeItem('user');
+        localStorage.removeItem('auth');
       });
     }
   
