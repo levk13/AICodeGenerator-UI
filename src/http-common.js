@@ -17,7 +17,10 @@ import store  from "./store";
       if (token) {
           config.headers['Authorization'] = `${token}`;
       }
-
+      
+      const orgId = store.state.auth.user.org_id
+      console.log(orgId)
+      config.headers['orgId'] = orgId
       return config;
   },
 
