@@ -21,6 +21,7 @@ class AuthService {
         id: id,
       })
       .then(response => {
+        console.log('ABOUT TO REMOVE');
         console.log(response);
         localStorage.removeItem('user');
         localStorage.removeItem('auth');
