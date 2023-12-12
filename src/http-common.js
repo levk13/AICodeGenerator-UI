@@ -1,7 +1,9 @@
 import axios from "axios";
 import store  from "./store";
-//  const baseURL =  "http://aicodegenerator-dev.eba-b3dnfxyh.us-east-2.elasticbeanstalk.com/api"
-  const baseURL = "http://127.0.0.1:5000/api"
+import router from "./router"
+
+  const baseURL =  "http://aicodegenerator-dev.eba-b3dnfxyh.us-east-2.elasticbeanstalk.com/api"
+  //const baseURL = "http://127.0.0.1:5000/api"
 
   const instance = axios.create({
     baseURL
@@ -24,7 +26,10 @@ import store  from "./store";
           config.headers['Authorization'] = `${token}`;
       }
       
-      const orgId =1  // store.state.auth.user.org_id
+      var orgId = 0 ;
+      if(store.state.auth.user != null)
+        orgId =  store.state.auth.user.org_id
+
       console.log(orgId)
       config.headers['orgId'] = orgId
       return config;
@@ -42,12 +47,10 @@ instance.interceptors.response.use(function (response) {
   if (error.response.status === 401) {
     console.log("hit 401")
     store.dispatch('auth/logout',store.state.auth.user.id)
-    //router.push('/login')
+    router.push('/')
   }
   return Promise.reject(error)
 })
-
-
 
 
 export default instance;

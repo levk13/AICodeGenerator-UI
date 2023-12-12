@@ -75,12 +75,21 @@ methods: {
               this.runResult.push('Running Test for Selected Item: ' + selectedItem)
               const response = await http.get("/processingApi/runTest?issue="  +selectedItem);      
               this.runResult.push(response.data)
-            
           }
           catch (error) {
-            this.runResult.push("A Processing Error has occured, please check the logs for further details.")
+            if (error.response==null){
+              this.runResult.push("A Processing error has occured, please contact support for assistence.")
+            } 
+            else if (error.response.data== null){
+              this.runResult.push("A Processing error has occured, please contact support for assistence.")
+            }
+            else if(error.response.data.message ==null){
+              this.runResult.push("A Processing error has occured, please contact support for assistence.")
+            }
+            else {
+              this.runResult.push(error.response.data.message)
+            }
           }
-        
         }
     },
      
