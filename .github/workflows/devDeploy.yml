@@ -3,9 +3,7 @@ name: Deployment_dev
 on:
   push:
     branches: [ "development" ]
-  pull_request:
-    branches: [ "development" ]
-
+    
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,12 +11,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Deploying application to Amazon S3
-        uses: lewandy/vue-s3-deployer@main
-        with:
+      - name: Install
+        run: npm install
+        
+      - name: Build
+        run: npm run build
+
+      - name: Deploy
+        env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: us-east-1
-          AWS_BUCKET_NAME: scigon-dev-test-ui-app
-          APP_SOURCE_CODE: ./
-          BUILD_COMMAND: "npm run build"
+        run: |
+          aws s3 cp \
+            --recursive \
+            --regionus-east-1 \
+            [dist folder] s3://[s3 scigon-dev-test-ui-app]
