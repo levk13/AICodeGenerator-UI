@@ -14,7 +14,6 @@ import router from "./router"
  //const baseURL = "http://Aicodegenerator-backend-containe-prod.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
 
 var url = process.env.VUE_APP_BASE_URL; 
-console.log("HIT HERE!!")
 console.log( process.env.VUE_APP_BASE_URL)
 const instance = axios.create({
   url
