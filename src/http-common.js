@@ -3,7 +3,8 @@ import store  from "./store";
 import router from "./router"
 
 
-  //local host 
+
+  //localhost 
 //  const baseURL = "http://127.0.0.1:5000/api"
   
   //dev 
