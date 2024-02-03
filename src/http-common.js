@@ -4,7 +4,8 @@ import router from "./router"
 
 //localhost 
  // const baseURL = "http://127.0.0.1:5000/api"
-    //dev 
+
+ //dev
   //const baseURL = "http://aicodegenerator-backend-container-dev.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
   //prod 
  //const baseURL = "http://Aicodegenerator-backend-containe-prod.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
