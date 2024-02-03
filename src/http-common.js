@@ -2,21 +2,15 @@ import axios from "axios";
 import store  from "./store";
 import router from "./router"
 
-
-
-  //localhost 
-//  const baseURL = "http://127.0.0.1:5000/api"
-  
-  //dev 
+//localhost 
+ // const baseURL = "http://127.0.0.1:5000/api"
+    //dev 
   //const baseURL = "http://aicodegenerator-backend-container-dev.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
-
   //prod 
- const baseURL = "http://Aicodegenerator-backend-containe-prod.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
+ //const baseURL = "http://Aicodegenerator-backend-containe-prod.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
 
-  const instance = axios.create({
-    baseURL
-  });
-
+console.log( process.env.VUE_APP_BASE_URL)
+const instance = axios.create({ baseURL: process.env.VUE_APP_BASE_URL});
 
   instance.interceptors.request.use(
   (config) => {
@@ -25,7 +19,6 @@ import router from "./router"
     config.headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, PUT, DELETE, OPTIONS"
     config.headers["Access-Control-Allow-Headers"] = "Origin, Content-Type, X-Auth-Token"
     
-
     const token = localStorage.getItem('auth');
       if (token == null) return config;
       console.log(token)
