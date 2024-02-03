@@ -11,10 +11,13 @@ import router from "./router"
   //const baseURL = "http://aicodegenerator-backend-container-dev.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
 
   //prod 
- const baseURL = "http://Aicodegenerator-backend-containe-prod.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
+ //const baseURL = "http://Aicodegenerator-backend-containe-prod.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
 
-  const instance = axios.create({
-    baseURL
+var url = process.env.VUE_APP_BASE_URL; 
+console.log("HIT HERE!!")
+console.log( process.env.VUE_APP_BASE_URL)
+const instance = axios.create({
+  url
   });
 
 
@@ -25,7 +28,6 @@ import router from "./router"
     config.headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, PUT, DELETE, OPTIONS"
     config.headers["Access-Control-Allow-Headers"] = "Origin, Content-Type, X-Auth-Token"
     
-
     const token = localStorage.getItem('auth');
       if (token == null) return config;
       console.log(token)
