@@ -2,8 +2,15 @@ import axios from "axios";
 import store  from "./store";
 import router from "./router"
 
-  const baseURL =  "http://aicodegenerator-dev.eba-b3dnfxyh.us-east-2.elasticbeanstalk.com/api"
-  //const baseURL = "http://127.0.0.1:5000/api"
+
+  //local host 
+//  const baseURL = "http://127.0.0.1:5000/api"
+  
+  //dev 
+  //const baseURL = "http://aicodegenerator-backend-container-dev.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
+
+  //prod 
+ const baseURL = "http://Aicodegenerator-backend-containe-prod.eba-q8rgpi3z.us-east-2.elasticbeanstalk.com/api"
 
   const instance = axios.create({
     baseURL
