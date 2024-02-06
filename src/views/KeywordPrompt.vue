@@ -2,12 +2,14 @@
     <div id="jiraPage">
      
       <div class="d-flex">
-      <button v-on:click="manageVisibility('test')" id="runbutton">Run Test </button>  
-      <button v-on:click="manageVisibility('add')" id="runbutton">Add New</button>  
+      <button id="runbutton" v-on:click="manageVisibility('test')" >Run Test </button>  
+      <button  v-on:click="manageVisibility('add')" id="runbutton">Add New</button>  
+
+      
+      <input v-model="filterKeyword" type="text" @input="handleFilterChange" placeholder="Keyword Search">
       </div>
 
       <InPageModal :open="isOpen">
-      
         <div id="panelDiv" v-if="isTestVisible" >
         <select  v-model="selectedItem" id="jiraItems">
                 <option value="" disabled hidden>Select Issue</option>
@@ -42,10 +44,11 @@
                     <th>Edit</th>
                     <th>Save</th>
                     <th>Delete</th>
+
                 </tr>
             </thead>
         <tbody>
-            <tr v-for="row in promptkeywords" v-bind:key="row.key" >
+            <tr v-for="row in filterItems" v-bind:key="row.key" >
                 <td>
                     {{row.data.key}}    
                 </td>
@@ -56,14 +59,14 @@
                 </td>
 
                 <td>
-                  <button id="runbutton" v-on:click="enableEditMode(row)">edit</button>
+                  <button class ="btn btn-outline-primary" v-on:click="enableEditMode(row)">edit</button>
                 </td>
 
                 <td>
-                    <button id="runbutton" v-on:click="saveRow(row)">save</button>
+                    <button class="btn btn-success" v-on:click="saveRow(row)">save</button>
                 </td>
                 <td>
-                    <button id="runbutton" v-on:click="deleteRow(row)">Delete</button>
+                    <button class="btn btn-danger" v-on:click="deleteRow(row)">Delete</button>
                 </td>
 
 
@@ -95,13 +98,15 @@
     return {
         promptkeywords : [],
         jiraItems :[], 
+        filterItems :[],
         selectedItem : '',
         promptResponse : '',
         addingKey : '',
         addingValue : '', 
         isGridVisible: true,  
         isAddNewVisible: false, 
-        isTestVisible: false
+        isTestVisible: false, 
+        filterKeyword: ''
     }
   },
   created() {
@@ -118,6 +123,16 @@
         this.isTestVisible= false
     },
 
+
+    handleFilterChange(){
+
+      if(this.filterKeyword == ''){
+        this.filterItems = this.promptkeywords
+        console.log('No Filter')
+        return;
+      }
+      this.filterItems = this.promptkeywords.filter(item => item.data.key.includes(this.filterKeyword));
+    },
 
     manageVisibility(clickBy){
       this.isOpen = true;
@@ -139,6 +154,7 @@
           var issue =  response.data[i]
           this.jiraItems.push(issue)
        }
+
   },
   
     async loadPromptKeywords(){
@@ -149,6 +165,8 @@
             this.promptkeywords.push({data:item, isEditMode : false})
 
          }
+         this.filterItems = this.promptkeywords;
+         this.filterKeyword = '';
     },
     enableEditMode(row){
         row.isEditMode = !row.isEditMode;
