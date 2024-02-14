@@ -23,8 +23,9 @@
             <span>Login</span>
           </button>
         </div>
-        <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">
+     <br/><br/><br/><br/>
+        <div>
+          <div v-if="message" class="alert alert-warning" role="alert">
             {{ message }}
           </div>
         </div>
@@ -74,13 +75,10 @@ export default {
           this.$router.push("/testrunner");
         },
         (error) => {
+          console.log("Logging Error")
+          console.log(error)
           this.loading = false;
-          this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+          this.message = "Either Login failed or License in Use"
         }
       );
     },
