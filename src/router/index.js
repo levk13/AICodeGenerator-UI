@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter, isNavigationFailure } from "vue-router";
-import AICodeGeneratorJira from '../views/AICodeGeneratorJira';
+import AICodeGenerator from '../views/AICodeGenerator';
 import Home from '../views/Home';
 import store from '@/store/index';
 import KeywordPrompt from '../views/KeywordPrompt'
@@ -13,7 +13,7 @@ const routes = [
   {
     path: "/testrunner",
     name: "Testrunner",
-    component: AICodeGeneratorJira,
+    component: AICodeGenerator,
     beforeEnter(to, from, next) {
         if (store.state.auth.status.loggedIn) {
             next();

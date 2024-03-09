@@ -22,11 +22,14 @@ const instance = axios.create({ baseURL: process.env.VUE_APP_BASE_URL});
       }
       
       var orgId = 0 ;
-      if(store.state.auth.user != null)
+      var userId =0;
+      if(store.state.auth.user != null) {
         orgId =  store.state.auth.user.org_id
-
-      console.log(orgId)
+        userId = store.state.auth.user.id
+      }
+      
       config.headers['orgId'] = orgId
+      config.headers['userId'] = userId
       return config;
   },
 
