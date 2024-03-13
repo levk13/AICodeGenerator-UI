@@ -2,7 +2,7 @@
     <div id="jiraPage">
      
       <div class="d-flex">
-      <button id="runbutton" v-on:click="manageVisibility('test')" >Run Test </button>  
+      <!-- <button id="runbutton" v-on:click="manageVisibility('test')" >Run Test </button>   -->
       <button  v-on:click="manageVisibility('add')" id="runbutton">Add New</button>  
 
       
@@ -11,9 +11,9 @@
 
       <InPageModal :open="isOpen">
         <div id="panelDiv" v-if="isTestVisible" >
-        <select  v-model="selectedItem" id="jiraItems">
+        <select  v-model="selectedItem" id="items">
                 <option value="" disabled hidden>Select Issue</option>
-              <option v-for="name in jiraItems" :key="name" :value="name">{{ name }}</option>
+              <option v-for="name in items" :key="name" :value="name">{{ name }}</option>
            </select>
            <button v-on:click="run()"  id="runbutton">Run Prompt Test</button>
 
@@ -97,7 +97,7 @@
   data() {
     return {
         promptkeywords : [],
-        jiraItems :[], 
+        items :[], 
         filterItems :[],
         selectedItem : '',
         promptResponse : '',
@@ -111,7 +111,7 @@
   },
   created() {
       this.loadPromptKeywords()
-      this.populateJiraItems()
+      //this.populateTestItems()
     },
   
   methods: {
@@ -148,11 +148,11 @@
     },
 
 
-    async populateJiraItems(){
-      const response = await http.get("/processingApi/getJiraItems");
+    async populateTestItems(){
+      const response = await http.get("/processingApi/getItems");
        for (var i = 0; i < response.data.length; i++){
           var issue =  response.data[i]
-          this.jiraItems.push(issue)
+          this.items.push(issue)
        }
 
   },
