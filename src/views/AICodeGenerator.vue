@@ -1,14 +1,11 @@
 <template>
-  <div id="jiraPage">
+  <div id="testpage">
     
     <div id="panelDiv"> 
       
          <div id="runPan">
-            <!-- <select  v-model="selectedJiraItem" id="jiraItems">
-                <option value="" disabled hidden>Select Issue</option>
-              <option v-for="name in jiraItems" :key="name" :value="name">{{ name }}</option>
-           </select> -->
-           <VueMultiselect v-model="selectedJiraItems" :options="jiraItems " 
+
+           <VueMultiselect v-model="selectedIssues" :options="issues " 
            :multiple="true"  :close-on-select="true"  placeholder="Select Test Items:"></VueMultiselect >
         
           <button  v-on:click="run" id="runbutton">Run</button>
@@ -34,7 +31,7 @@ import http from '../http-common'
 import VueMultiselect from 'vue-multiselect'
  
 export default {
-  name: 'AICodeGeneratorJira',
+  name: 'AICodeGenerator',
 
   components: {
     VueMultiselect 
@@ -42,24 +39,25 @@ export default {
 
 data() {
   return {
-     jiraItems : [],
-     selectedJiraItems : [],
+     issues : [],
+     selectedIssues : [],
      runResult : ['No Active Test Results...']
   }
 },
 created() {
-    this.populateJiraItems()
+    this.populateItems()
   },
 
 methods: {
 
 
 
-  async populateJiraItems(){
-      const response = await http.get("/processingApi/getJiraItems");
+  async populateItems(){
+      const response = await http.get("/processingApi/getIssues");
        for (var i = 0; i < response.data.length; i++){
           var issue =  response.data[i]
-          this.jiraItems.push(issue)
+          console.log(issue)
+          this.issues.push(issue)
        }
   },
 
@@ -69,9 +67,9 @@ methods: {
 
     async run() {
       this.runResult = []
-      for (var i = 0; i < this.selectedJiraItems.length; i++){
+      for (var i = 0; i < this.selectedIssues.length; i++){
           try{
-              var selectedItem = this.selectedJiraItems[i];
+              var selectedItem = this.selectedIssues[i];
               this.runResult.push('Running Test for Selected Item: ' + selectedItem)
               const response = await http.get("/processingApi/runTest?issue="  +selectedItem);      
               this.runResult.push(response.data)
