@@ -3,6 +3,7 @@ import AICodeGenerator from '../views/AICodeGenerator';
 import Home from '../views/Home';
 import store from '@/store/index';
 import KeywordPrompt from '../views/KeywordPrompt'
+import IssueCreator  from "../views/IssueCreator.vue";
 
 const routes = [
  {
@@ -36,9 +37,20 @@ const routes = [
         next('/');
       }
     }
-
-}
-
+  },
+  {
+    path: "/issuecreator",
+    name: "issuecreator",
+    component: IssueCreator,
+    beforeEnter(to, from, next) {
+        if (store.state.auth.status.loggedIn) {
+            next();
+          }
+         else {
+          next('/');
+        }
+      }
+    }
 ];
 
 
