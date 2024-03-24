@@ -131,7 +131,7 @@
         console.log('No Filter')
         return;
       }
-      this.filterItems = this.promptkeywords.filter(item => item.data.key.includes(this.filterKeyword));
+      this.filterItems = this.promptkeywords.filter(item => item.data.key.toLowerCase().includes(this.filterKeyword.toLowerCase()));
     },
 
     manageVisibility(clickBy){

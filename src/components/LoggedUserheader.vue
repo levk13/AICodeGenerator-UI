@@ -18,7 +18,12 @@
         <li class="nav-item">   
             <button type="button" v-on:click="routeToPrompt" class="btn btn-light">Prompt Manager</button>
         </li>
-    </ul>
+    
+        <li class="nav-item">   
+            <button type="button" v-on:click="routeToIssueCreator" class="btn btn-light">Issue Creator</button>
+        </li>
+    
+      </ul>
        
     <div class="d-flex">
      <label >{{ first_name}}</label>
@@ -56,6 +61,12 @@ methods: {
     this.$router.push("/prompthelper");
     
   },
+
+  routeToIssueCreator(){
+    this.$router.push("/issuecreator");
+    
+  }
+
 
 
 
