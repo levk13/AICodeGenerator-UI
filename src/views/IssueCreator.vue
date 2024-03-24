@@ -30,6 +30,7 @@
       <label id="label">Manual Case #:</label>
       <input id="manulcaseinput" v-model="manualtestcasenum">
       <button  class="btn btn-light" v-on:click="getmanualtest">Load Manual Test case Instructions</button>
+      <button  class="btn btn-light" id="margin" v-on:click="clearAll">Clear All</button>
     </div>
   
   </div>
@@ -94,7 +95,6 @@
   
   data() {
     return {
-       issues : [],
        filterItems : [],
        promptkeywords : [], 
        instructions : '', 
@@ -110,6 +110,13 @@
   methods: {
   
 
+    clearAll() {
+      this.issueTitle = '';
+      this.fileName = ''; 
+      this.manualtestcasenum = '';
+      this.instructions = '';
+    },
+
     insertKeyword(row){
       this.instructions += row.data.key
     },
@@ -124,14 +131,6 @@
       this.issueTitle = response.data.title
     },
 
-    async populateItems(){
-        const response = await http.get("/processingApi/getIssues");
-         for (var i = 0; i < response.data.length; i++){
-            var issue =  response.data[i]
-            console.log(issue)
-            this.issues.push(issue)
-         }
-    },
 
     async loadPromptKeywords(){
         const response = await http.get("/promptApi/getall");
@@ -221,6 +220,10 @@ justify-content: center;
 align-items: center;
 gap: 10px;
 margin-right: 10px;
+}
+
+#margin { 
+  margin-left: 10px;
 }
 
 #manulcaseinput{
