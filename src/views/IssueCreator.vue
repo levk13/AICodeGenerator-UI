@@ -4,69 +4,69 @@
 <div>
 
 
-  <div> 
-    <label>Issue Name</label>
-    <input v-model="issueName"/>
+  <div class="flex-container">
+    
+    <div class="flex-item">
+      <div id="flex-right">
+        <label id="label">Title</label>
+        <input   v-model="issueTitle"/>
+      </div>
+      <div id="flex-right">
+        <label id="label">File Name</label>
+        <input v-model="fileName"/>
+      </div>
 
-    <label>File Name</label>
-    <input v-model="fileName"/>
-    <button  v-on:click="getmanualtest">Load Manual Test case Instructions</button>
+      <div id="flex-right">
+       <button class="btn btn-light"  v-on:click="createIssue">Create Issue</button>
+      </div>
 
-
+       <div id="flex-left">
+      <input v-model="filterKeyword" type="text" @input="handleFilterChange" placeholder="Keyword Filter"> 
+    </div>
   </div>
-
- 
+    
+  <div class="flex-item"  id="flex-left">
+    <div id="flex-left">
+      <label id="label">Manual Case #:</label>
+      <input id="manulcaseinput" v-model="manualtestcasenum">
+      <button  class="btn btn-light" v-on:click="getmanualtest">Load Manual Test case Instructions</button>
+    </div>
+  
+  </div>
+ </div>
   
   <div class="flex-container">
     <div  class="flex-item">
-      <input id="keywordFilter" v-model="filterKeyword" type="text" @input="handleFilterChange" placeholder="Keyword Filter"> 
+      
       <div id ="table-scroll">      
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Key</th>
-                    <th>View</th>
+                    <!-- <th>View</th> -->
                     <th>Insert</th>
                 </tr>
             </thead>
         <tbody>
             <tr v-for="row in filterItems" v-bind:key="row.key" >
-                <td>
+                <td  data-toggle="tooltip" v-bind:title ="row.data.value">
                     {{row.data.key}}  
                 </td>
 
                 <td>
-                    <button class="btn btn-outline-primary" v-on:click="openAlert(row)">View</button>
+                    <button class="btn btn-success"  data-toggle="tooltip" v-bind:title ="row.data.value" data-placement="right" v-on:click="insertKeyword(row)">Insert</button>
                 </td>
-
-
-                <td>
-                    <button class="btn btn-success" v-on:click="insertKeyword(row)">Insert</button>
-                </td>
-           
-
             </tr>
         </tbody>   
         </table> 
       </div>
-
-    
   </div>
     
-  <div  class="flex-item">
-    <button  v-on:click="createIssue">Create Issue</button>
+  <div  class="flex-item">     
     <textarea  v-model="instructions" id="instructions_test">
     </textarea>
 
   </div>
-    <!-- <b-form-textarea
-      id="textarea"
-      v-model="text"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>   -->
-
   </div>   
   <div>
 </div>
@@ -78,9 +78,16 @@
   
   <script>
   import http from '../http-common'
+  import { Tooltip } from 'bootstrap'
   import "bootstrap/dist/css/bootstrap.min.css";
   export default {
     name: 'IssueCreator',
+    mounted() {
+      new Tooltip(document.body, {
+      selector: "[data-bs-toggle='tooltip']",
+    })
+
+    },
   
     components: {
     },
@@ -91,8 +98,9 @@
        filterItems : [],
        promptkeywords : [], 
        instructions : '', 
-       issueName : '', 
-       fileName : ''
+       issueTitle : '', 
+       fileName : '', 
+       manualtestcasenum :'',
     }
   },
   created() {
@@ -106,18 +114,14 @@
       this.instructions += row.data.key
     },
   
-    openAlert(row){
-      alert(row.data.value)
-    },
-
     async getmanualtest(){ 
-      var issue = "48032"
-      const response = await http.get("/issuesApi/getmanualtest?manualtestnum="  + issue); 
+ 
+      const response = await http.get("/issuesApi/getmanualtest?manualtestnum="  + this.manualtestcasenum); 
       
       Object.entries(response.data.test_steps).forEach(entry => {
          this.instructions +=  entry[1] + '\n'
       })
-      this.issueName = response.data.title
+      this.issueTitle = response.data.title
     },
 
     async populateItems(){
@@ -157,38 +161,12 @@
   
     async createIssue(){
       var request = {
-            "testcasenumber": "48032", 
-            "instructions" : this.instructions
+            "description" : this.instructions, 
+            "title" : this.issueTitle, 
+            "file_name" : this.fileName
         }
       await http.post("/issuesApi/createissuefromtestcase", request);      
-    },
-
-      async run() {
-        this.runResult = []
-        for (var i = 0; i < this.selectedIssues.length; i++){
-            try{
-                var selectedItem = this.selectedIssues[i];
-                this.runResult.push('Running Test for Selected Item: ' + selectedItem)
-                const response = await http.get("/processingApi/runTest?issue="  +selectedItem);      
-                this.runResult.push(response.data)
-            }
-            catch (error) {
-              if (error.response==null){
-                this.runResult.push("A Processing error has occured, please contact support for assistence.")
-              } 
-              else if (error.response.data== null){
-                this.runResult.push("A Processing error has occured, please contact support for assistence.")
-              }
-              else if(error.response.data.message ==null){
-                this.runResult.push("A Processing error has occured, please contact support for assistence.")
-              }
-              else {
-                this.runResult.push(error.response.data.message)
-              }
-            }
-          }
-      },
-       
+    },  
     }
   }
   
@@ -210,10 +188,14 @@
   flex-direction: row;
 }
 
-  #keywordFilter {
-    align-content: flex-start
+ 
+  #flex-right {
+    text-align: right;
   }
-
+  #flex-left {
+    text-align: left;
+    margin-left: 20px;
+  }
 .flex-item {
   flex: 1;
 }
@@ -223,4 +205,26 @@
   overflow:auto;  
   margin-top:20px;
 }
+
+#label {
+  margin-right: 5px;
+  margin-left: 5px;
+  color: aliceblue;
+}
+
+#runbutton {
+border-radius: 2px;
+background: #25BCEF;
+display: flex;
+padding: 12px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+margin-right: 10px;
+}
+
+#manulcaseinput{
+  margin-right: 10px;
+}
+
   </style>
