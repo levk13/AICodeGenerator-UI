@@ -4,7 +4,7 @@ import Home from '../views/Home';
 import store from '@/store/index';
 import KeywordPrompt from '../views/KeywordPrompt'
 import IssueCreator  from "../views/IssueCreator.vue";
-
+import WorkflowManager from '../views/WorkflowManager'
 const routes = [
  {
     path: "/",
@@ -50,7 +50,20 @@ const routes = [
           next('/');
         }
       }
-    }
+    },
+    {
+    path: "/workflowmanager",
+    name: "workflowmanager",
+    component: WorkflowManager,
+    beforeEnter(to, from, next) {
+        if (store.state.auth.status.loggedIn) {
+            next();
+          }
+         else {
+          next('/');
+        }
+      }
+    },
 ];
 
 

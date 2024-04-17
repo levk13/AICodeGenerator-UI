@@ -76,7 +76,7 @@
 
 
         <div class="flex-right">
-          <button class="btn btn-light"  v-on:click="saveIssue">Save</button>
+          <button class="btn btn-light" @click="saveIssue">Save</button>
         </div>
       </div>
     <!--Second section-->
@@ -94,7 +94,7 @@
       <h3 class="section_label">Load from Template</h3>
       <div class="flex-right">
         <select></select>
-        <button  class="btn btn-light" v-on:click="getmanualtest">Get</button>
+        <button  class="btn btn-light" @click="getmanualtest">Get</button>
       </div>
     </div>
 
@@ -104,7 +104,7 @@
       <div class="flex-right">
         <label id="label">Manual Case #:</label>
         <input id="manulcaseinput" v-model="manualtestcasenum">
-        <button  class="btn btn-light" v-on:click="getmanualtest">Get</button>
+        <button  class="btn btn-light" @click="getmanualtest">Get</button>
       </div>
     </div>
 

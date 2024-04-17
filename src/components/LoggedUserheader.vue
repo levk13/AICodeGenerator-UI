@@ -23,6 +23,10 @@
             <button type="button" v-on:click="routeToIssueCreator" class="btn btn-light">Issue Creator</button>
         </li>
     
+        <li class="nav-item">   
+            <button type="button" v-on:click="routeToWorkFlow" class="btn btn-light">Workflow Manager</button>
+        </li>
+
       </ul>
        
     <div class="d-flex">
@@ -65,9 +69,14 @@ methods: {
   routeToIssueCreator(){
     this.$router.push("/issuecreator");
     
+  },
+  routeToWorkFlow(){
+    this.$router.push("/workflowmanager");
+    
   }
 
 
+  
 
 
  }
