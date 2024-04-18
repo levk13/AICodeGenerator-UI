@@ -6,38 +6,14 @@
 
   <div class="flex-container">
     
-    <div class="flex-item">
-      <div id="flex-right">
-        <label id="label">Title</label>
-        <input   v-model="issueTitle"/>
-      </div>
-      <div id="flex-right">
-        <label id="label">File Name</label>
-        <input v-model="fileName"/>
-      </div>
-
-      <div id="flex-right">
-       <button class="btn btn-light"  v-on:click="createIssue">Create Issue</button>
-      </div>
-
-       <div id="flex-left">
+    <div id="flex-left">
       <input v-model="filterKeyword" type="text" @input="handleFilterChange" placeholder="Keyword Filter"> 
     </div>
-  </div>
-    
-  <div class="flex-item"  id="flex-left">
-    <div id="flex-left">
-      <label id="label">Manual Case #:</label>
-      <input id="manulcaseinput" v-model="manualtestcasenum">
-      <button  class="btn btn-light" v-on:click="getmanualtest">Load Manual Test case Instructions</button>
-      <button  class="btn btn-light" id="margin" v-on:click="clearAll">Clear All</button>
-    </div>
-  
-  </div>
- </div>
+    <button  class="btn btn-light" id="margin" v-on:click="clearAll">Clear All</button>
+ </div> 
   
   <div class="flex-container">
-    <div  class="flex-item">
+    <div  class="item1">
       
       <div id ="table-scroll">      
         <table class="table table-bordered table-striped">
@@ -63,24 +39,95 @@
       </div>
   </div>
     
-  <div  class="flex-item">     
+  <div  class="item2">     
     <textarea  v-model="instructions" id="instructions_test">
     </textarea>
+  </div>
+
+  <!--This is the right column of main grid-->
+  <div class="item2">   
+  
+    <!-- This is the column based container for-->
+    <div class="flex-container-column">
+
+      <div class="item2">
+      <!-- First Section-->  
+        <div class="border-container-item"> 
+         <h3 class="section_label">Metadata</h3>
+          <div class="flex-right"> 
+          <label id="label">Title</label>
+          <input class="input_fields"  v-model="issueTitle"/>
+        </div>
+      
+        <div class="flex-right">
+          <label id="label">File Name</label>
+          <input class="input_fields" v-model="fileName"/>
+        </div>
+
+        <div class="flex-right">
+          <label id="label">Change Type</label>
+          <input class="input_fields" v-model="change_type"/>
+        </div>
+
+        <div class="flex-right">
+          <label id="label">Reference File Name</label>
+          <input class="input_fields" v-model="reference_file_name"/>
+        </div>
+
+
+        <div class="flex-right">
+          <button class="btn btn-light" @click="saveIssue">Save</button>
+        </div>
+      </div>
+    <!--Second section-->
+    <div class="border-container-item ">
+       <h3 class="section_label">Load Existing</h3> 
+      <div class="flex-right"> 
+        <IssueSelector class="issue_selector" ref ="issueSelector"/>
+         <button class="btn btn-light" @click="onGetIssue">get</button>
+
+       </div>
+    </div>
+
+    <!--Thirs section-->
+    <div class="border-container-item">
+      <h3 class="section_label">Load from Template</h3>
+      <div class="flex-right">
+        <select></select>
+        <button  class="btn btn-light" @click="getmanualtest">Get</button>
+      </div>
+    </div>
+
+
+    <!--fourth section-->
+    <div class="border-container-item">
+      <div class="flex-right">
+        <label id="label">Manual Case #:</label>
+        <input id="manulcaseinput" v-model="manualtestcasenum">
+        <button  class="btn btn-light" @click="getmanualtest">Get</button>
+      </div>
+    </div>
+
 
   </div>
-  </div>   
-  <div>
-</div>
-</div>
+ </div>
+  
+  </div>
 
 
+</div>
+  </div> 
+  
 
   </template>
   
   <script>
   import http from '../http-common'
   import { Tooltip } from 'bootstrap'
+  import IssueSelector from '../components/IssueSelector.vue'
   import "bootstrap/dist/css/bootstrap.min.css";
+//  import { ref} from 'vue'
+
   export default {
     name: 'IssueCreator',
     mounted() {
@@ -91,6 +138,7 @@
     },
   
     components: {
+      IssueSelector
     },
   
   data() {
@@ -101,6 +149,9 @@
        issueTitle : '', 
        fileName : '', 
        manualtestcasenum :'',
+       change_type : '',
+       mode : 'new', 
+       issueId : ''
     }
   },
   created() {
@@ -120,6 +171,10 @@
     insertKeyword(row){
       this.instructions += row.data.key
     },
+
+    getIssue(){
+      console.log(this.selectedIssues[0]) 
+    },
   
     async getmanualtest(){ 
  
@@ -131,6 +186,20 @@
       this.issueTitle = response.data.title
     },
 
+    async onGetIssue() {
+       var selected = this.$refs.issueSelector.getSelected();
+       var first = selected[0] 
+
+       const response = await http.get("/issuesApi/getissue?issue="  +first);     
+       var data = response.data;
+       this.issueTitle = data.title;
+       this.instructions = data.description;  
+       this.fileName = data.file_name;
+       this.reference_file_name = data.reference_file_name;
+       this.change_type = data.change_type;
+       this.mode = "edit";
+       this.issueId = first;
+    },
 
     async loadPromptKeywords(){
         const response = await http.get("/promptApi/getall");
@@ -158,13 +227,20 @@
   this.filterItems = this.promptkeywords.filter(item => item.data.key.toLowerCase().includes(this.filterKeyword.toLowerCase()));
   },
   
-    async createIssue(){
+    async saveIssue(){
       var request = {
             "description" : this.instructions, 
             "title" : this.issueTitle, 
-            "file_name" : this.fileName
+            "file_name" : this.fileName, 
+            "change_type": this.change_type, 
+            "reference_file_name" : this.reference_file_name,
         }
-      await http.post("/issuesApi/createissuefromtestcase", request);      
+
+        if(this.mode=="edit"){
+          request['id'] = this.issueId
+        }
+
+      await http.post("/issuesApi/createissue", request);      
     },  
     }
   }
@@ -173,31 +249,74 @@
   
   <style>
     #instructions_test {
-      width: 800px;
+      width: 1300px;
       height: 500px;
     }
   
-    #ul {
-      width: 200px;
-      height: 500px;
+
+    .input_fields {
+      width:  500px;
     }
+
+    .issue_selector{
+      width: 300px;
+    }
+
 
     .flex-container {
   display: flex;
   flex-direction: row;
 }
 
+.flex-container-column {
+  display: flex;
+  flex-direction: columns;
+  margin-right: 20px;
+}
+
+.section_label { 
+ color: white;
+}
+
+.item1 {
+    flex: 0 1 auto;
+    margin-left: 15px;
+}
+
+.item2 {
+    flex: 0 1 auto;
+    justify-content: left;
+    margin-left: 15px;
+  }
+
+  .border-container-item {
+    flex: 0 1 auto;
+    justify-content: left;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    border:3px solid whitesmoke;
+  }
  
-  #flex-right {
+  .flex-right {
     text-align: right;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
   #flex-left {
     text-align: left;
     margin-left: 20px;
   }
 .flex-item {
-  flex: 1;
+  flex: 0 1 auto;
 }
+.flex-item-right {
+  flex-basis: 80%;
+  width: 1000px;
+  justify-content: left;
+}
+
+
 #table-scroll {
   height:500px;
   max-height:500px;
@@ -229,5 +348,13 @@ margin-right: 10px;
 #manulcaseinput{
   margin-right: 10px;
 }
-
+.box {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.box>* {
+  flex: 1 1 80px;
+}
   </style>
