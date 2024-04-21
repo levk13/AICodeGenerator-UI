@@ -45,20 +45,24 @@ data() {
   }
 },
 created() {
-    this.populateItems()
+    this.populateItemsAndLoadAnyToRun() 
   },
 
 methods: {
 
 
 
-  async populateItems(){
+  async populateItemsAndLoadAnyToRun(){
       const response = await http.get("/processingApi/getIssues");
        for (var i = 0; i < response.data.length; i++){
           var issue =  response.data[i]
           console.log(issue)
           this.issues.push(issue)
        }
+
+       this.selectedIssues = this.$store.state.issuesToRUn
+       this.$store.state.issuesToRUn = []
+       // console.log(issuesToRun);
   },
 
   clear(){

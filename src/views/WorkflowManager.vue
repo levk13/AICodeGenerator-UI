@@ -98,7 +98,7 @@
                             </div>
 
                         
-            <div class="align-right">      
+            <div class="align-right top_space">      
                 <button class="btn btn-secondary" @click =removeItem(workflowItem)>Remove</button>     
             </div>
             
@@ -109,6 +109,7 @@
                 </ul>
                 <div class="align-right">
                  <button @click="createIssues" class="btn btn-light">Create Issues</button>
+                 <button @click="ProcessIssues" :disabled="isProcessIssueDisabled" class="btn btn-light left_space ">Process Issues</button>
                 </div>
             </div>
         </div>
@@ -129,17 +130,42 @@
     data() {
     return {
       workflowItems: [], 
-      availableWorkItems : []
+      availableWorkItems : [], 
+      createdIssues :[], 
+      isProcessIssueDisabled : true
     }
    },
    created(){
         this.loadAvailableWorkItems();
+        this.createdIssues = [];
     },
    methods: {
     
-    async createIssues(){
-             await http.post("/issuesApi/createworkflow", this.workflowItems);
+    async createIssues(){   
+        var response =  await http.post("/issuesApi/createworkflow", this.workflowItems);
+        this.createdIssues = response.data; 
+        this.setProcessEnablement();
+        console.log(response.data);
+        },
+
+    setProcessEnablement(){
+       if(this.createdIssues.length>0) 
+            this.isProcessIssueDisabled = false; 
+       else 
+        this.isProcessIssueDisabled = true;
     },
+        
+    ProcessIssues(){
+        if(this.createdIssues.length==0) 
+            return; 
+
+            // this.createdIssues.push(12465);
+            // this.createdIssues.push(3434);
+                
+        this.$store.state.issuesToRUn = this.createdIssues 
+        this.$router.push("/testrunner");    
+
+        },
 
     async loadAvailableWorkItems(){
       
@@ -185,6 +211,14 @@
 
   .label {
   margin-right: 5px;
+}
+
+.left_space {
+  margin-left: 5px;
+}
+
+.top_space {
+    margin-top: 5px;
 }
  </style>
    
