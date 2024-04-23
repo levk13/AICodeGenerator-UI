@@ -1,32 +1,32 @@
 <template>
 
   
-<div>
+<div class="container-fluid">
+       
+       <div class="row">
+           <div class="col">
+            <div class="keyword">
+              <input v-model="filterKeyword" type="text" @input="handleFilterChange" placeholder="Keyword Filter"> 
+              <button  class="btn btn-light" id="margin" v-on:click="clearAll">Clear All</button>
+            </div>
+           </div> <!-- Close of COL 1--> 
+       </div> <!-- Close of ROW 1-->   
 
 
-  <div class="flex-container">
-    
-    <div id="flex-left">
-      <input v-model="filterKeyword" type="text" @input="handleFilterChange" placeholder="Keyword Filter"> 
-    </div>
-    <button  class="btn btn-light" id="margin" v-on:click="clearAll">Clear All</button>
- </div> 
-  
-  <div class="flex-container">
-    <div  class="item1">
-      
-      <div id ="table-scroll">      
-        <table class="table table-bordered table-striped">
-            <thead>
+       <div class="row">
+          <div class="col, keyword">
+            <div id ="table-scroll">      
+            <table class="table table-bordered table-striped ">
+              <thead>
                 <tr>
                     <th>Key</th>
                     <!-- <th>View</th> -->
                     <th>Insert</th>
                 </tr>
             </thead>
-        <tbody>
-            <tr v-for="row in filterItems" v-bind:key="row.key" >
-                <td  data-toggle="tooltip" v-bind:title ="row.data.value">
+            <tbody>
+              <tr v-for="row in filterItems" v-bind:key="row.key" >
+                <td data-toggle="tooltip" v-bind:title ="row.data.value">
                     {{row.data.key}}  
                 </td>
 
@@ -37,87 +37,101 @@
         </tbody>   
         </table> 
       </div>
+    </div> <!-- Close of COL 1--> 
+       
+      <div  class="col align-left">     
+        <textarea  v-model="instructions" class ="instructions_test">
+        </textarea>
+      </div>
+
+  <div class="col">
+    <div class ="align-left"> 
+      <div class="row margin-top">
+                                <div class="col">
+                                    <div class="d-grid gap-2">
+                                        <button type="button" class="btn btn-light" style="height: auto; width: 150px;" data-bs-toggle="collapse" data-bs-target="#collapse-b1" aria-expanded="false" aria-controls="collapse-b1">
+                                            Main Info
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="d-grid gap-2">
+                                        <button type="button" class="btn btn-light" style="height: auto;  width: 150px;" data-bs-toggle="collapse" data-bs-target="#collapse-b2" aria-expanded="false" aria-controls="collapse-b2">
+                                            Load Existing
+                                        </button>
+                                    </div>
+                                </div>
+                            
+                                <div class="col">
+                                    <div class="d-grid gap-2">
+                                        <button type="button" class="btn btn-light" style="height: auto;  width: 150px;" data-bs-toggle="collapse" data-bs-target="#collapse-b3" aria-expanded="false" aria-controls="collapse-b2">
+                                            Get Manual Test
+                                        </button>
+                                    </div>
+                                </div>
+                            
+                              </div>
+
+                            <div id="myGroup">  <!-- Add the parent id here -->
+                                <div class="collapse" id="collapse-b1"  data-bs-parent="#myGroup">
+                                  <div class="top-margin">
+                                  <div class="input_field_container_right"> 
+                                      <label id="label">Title</label>
+                                      <input class="input_fields"  v-model="issueTitle"/>
+                                    </div>
+
+                                    <div class="input_field_container_right"> 
+                                      <label id="label">File Name</label>
+                                      <input class="input_fields" v-model="fileName"/>
+                                    </div>
+
+                                    <div class="input_field_container_right"> 
+                                      <label id="label">Change Type</label>
+                                       <input class="input_fields" v-model="change_type"/>
+                                    </div>
+
+
+                                    <div class="input_field_container_right"> 
+                                      <label id="label">Reference File Name</label>
+                                      <input class="input_fields" v-model="reference_file_name"/>
+                                    </div>
+                                    <div class="input_field_container_right" >
+                                      <button class="btn btn-light" @click="saveIssue">Save</button>
+                                     </div>
+                                  </div>    
+                                </div>
+
+                            <div class="collapse" id="collapse-b2" data-bs-parent="#myGroup">
+                              <div class="margin-top">
+                              <div class="input_field_container_right">
+                              <br>
+                                <IssueSelector class="issue_selector" ref ="issueSelector"/>
+                             
+                             <button class="btn btn-light" @click="onGetIssue">get</button>
+                            </div> 
+                          </div>
+                          </div>
+                            
+                            <div class="collapse" id="collapse-b3" data-bs-parent="#myGroup">
+                              <div class="flex-right">
+                                <label id="label">Manual Case #:</label>
+                                <input id="manulcaseinput" v-model="manualtestcasenum">
+                                 <button  class="btn btn-light" @click="getmanualtest">Get</button>
+                                </div>
+                            </div> 
+                      </div>   
+      </div>
   </div>
-    
-  <div  class="item2">     
-    <textarea  v-model="instructions" id="instructions_test">
-    </textarea>
-  </div>
+ </div>   
 
   <!--This is the right column of main grid-->
-  <div class="item2">   
-  
-    <!-- This is the column based container for-->
-    <div class="flex-container-column">
+ 
 
-      <div class="item2">
-      <!-- First Section-->  
-        <div class="border-container-item"> 
-         <h3 class="section_label">Metadata</h3>
-          <div class="flex-right"> 
-          <label id="label">Title</label>
-          <input class="input_fields"  v-model="issueTitle"/>
-        </div>
-      
-        <div class="flex-right">
-          <label id="label">File Name</label>
-          <input class="input_fields" v-model="fileName"/>
-        </div>
-
-        <div class="flex-right">
-          <label id="label">Change Type</label>
-          <input class="input_fields" v-model="change_type"/>
-        </div>
-
-        <div class="flex-right">
-          <label id="label">Reference File Name</label>
-          <input class="input_fields" v-model="reference_file_name"/>
-        </div>
-
-
-        <div class="flex-right">
-          <button class="btn btn-light" @click="saveIssue">Save</button>
-        </div>
-      </div>
-    <!--Second section-->
-    <div class="border-container-item ">
-       <h3 class="section_label">Load Existing</h3> 
-      <div class="flex-right"> 
-        <IssueSelector class="issue_selector" ref ="issueSelector"/>
-         <button class="btn btn-light" @click="onGetIssue">get</button>
-
-       </div>
-    </div>
-
-    <!--Thirs section-->
-    <div class="border-container-item">
-      <h3 class="section_label">Load from Template</h3>
-      <div class="flex-right">
-        <select></select>
-        <button  class="btn btn-light" @click="getmanualtest">Get</button>
-      </div>
-    </div>
-
-
-    <!--fourth section-->
-    <div class="border-container-item">
-      <div class="flex-right">
-        <label id="label">Manual Case #:</label>
-        <input id="manulcaseinput" v-model="manualtestcasenum">
-        <button  class="btn btn-light" @click="getmanualtest">Get</button>
-      </div>
-    </div>
-
-
-  </div>
- </div>
-  
-  </div>
 
 
 </div>
-  </div> 
-  
+
 
   </template>
   
@@ -248,9 +262,9 @@
   </script>
   
   <style>
-    #instructions_test {
-      width: 1300px;
-      height: 500px;
+    .instructions_test {
+      width:  1050px;
+      height: 520px;
     }
   
 
@@ -278,6 +292,12 @@
  color: white;
 }
 
+.keyword { 
+  width: 500px;
+  text-align: left;
+  justify-content: left;
+}
+
 .item1 {
     flex: 0 1 auto;
     margin-left: 15px;
@@ -303,9 +323,13 @@
     margin-top: 15px;
     margin-bottom: 15px;
   }
-  #flex-left {
+  .flex-left {
     text-align: left;
     margin-left: 20px;
+  }
+
+  .align-left { 
+    text-align: left;
   }
 .flex-item {
   flex: 0 1 auto;
@@ -357,4 +381,13 @@ margin-right: 10px;
 .box>* {
   flex: 1 1 80px;
 }
+
+.input_field_container_right{
+    text-align: right;
+    margin-bottom: 30px;
+  }
+
+  .top-margin {
+    margin-top: 10px;
+  }
   </style>

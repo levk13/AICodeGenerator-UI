@@ -19,9 +19,9 @@
             <button type="button" v-on:click="routeToPrompt" class="btn btn-light">Prompt Manager</button>
         </li>
     
-        <!-- <li class="nav-item">   
+        <li class="nav-item">   
             <button type="button" v-on:click="routeToIssueCreator" class="btn btn-light">Issue Creator</button>
-        </li> -->
+        </li>
     
         <li class="nav-item">   
             <button type="button" v-on:click="routeToWorkFlow" class="btn btn-light">Workflow Manager</button>
