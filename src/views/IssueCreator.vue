@@ -96,6 +96,12 @@
                                       <label id="label">Reference File Name</label>
                                       <input class="input_fields" v-model="reference_file_name"/>
                                     </div>
+
+                                    <div class="input_field_container_right"> 
+                                      <label id="label">Branch Name</label>
+                                      <input class="input_fields" v-model="branch"/>
+                                    </div>
+
                                     <div class="input_field_container_right" >
                                       <button class="btn btn-light" @click="saveIssue">Save</button>
                                      </div>
@@ -165,7 +171,8 @@
        manualtestcasenum :'',
        change_type : '',
        mode : 'new', 
-       issueId : ''
+       issueId : '', 
+       branch : '',
     }
   },
   created() {
@@ -213,6 +220,7 @@
        this.change_type = data.change_type;
        this.mode = "edit";
        this.issueId = first;
+       this.branch = data.branch;
     },
 
     async loadPromptKeywords(){
@@ -248,6 +256,7 @@
             "file_name" : this.fileName, 
             "change_type": this.change_type, 
             "reference_file_name" : this.reference_file_name,
+            "branch" : this.branch
         }
 
         if(this.mode=="edit"){
