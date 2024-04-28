@@ -105,7 +105,17 @@
                                     <div class="input_field_container_right" >
                                       <button class="btn btn-light" @click="saveIssue">Save</button>
                                      </div>
-                                  </div>    
+                                     <div class="input_field_container_right" >
+                                      <label>Current Isuse # {{ issueId }}</label>
+                                      <button class="btn btn-light" @click="saveIssue">Process </button>
+                                     </div>
+                               
+                                    </div>
+                                  
+                              
+                                  
+                                  
+
                                 </div>
 
                             <div class="collapse" id="collapse-b2" data-bs-parent="#myGroup">
@@ -187,6 +197,7 @@
       this.fileName = ''; 
       this.manualtestcasenum = '';
       this.instructions = '';
+      this.issueId = '';
     },
 
     insertKeyword(row){
@@ -263,7 +274,8 @@
           request['id'] = this.issueId
         }
 
-      await http.post("/issuesApi/createissue", request);      
+      var response = await http.post("/issuesApi/createissue", request);      
+      this.issueId = response.data
     },  
     }
   }
