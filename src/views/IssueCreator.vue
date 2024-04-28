@@ -107,7 +107,7 @@
                                      </div>
                                      <div v-if="successfulSave" class="input_field_container_right" >
                                       <label>Current Isuse # {{ issueId }}</label>
-                                      <button class="btn btn-light" @click="saveIssue">Process </button>
+                                      <button class="btn btn-light" @click="ProcessIssue">Process </button>
                                      </div>
                                
                                     </div>
@@ -261,6 +261,16 @@
   }
   this.filterItems = this.promptkeywords.filter(item => item.data.key.toLowerCase().includes(this.filterKeyword.toLowerCase()));
   },
+
+  ProcessIssue(){
+        if(this.issueId = '') 
+            return; 
+        
+            
+        this.$store.state.issuesToRUn = [this.issueId]
+        this.$router.push("/testrunner");    
+
+    },
   
     async saveIssue(){
       var request = {
