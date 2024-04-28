@@ -264,7 +264,7 @@
   },
 
   ProcessIssue(){
-        if(this.issueId = '') 
+        if(this.issueId == '') 
             return; 
         
             
