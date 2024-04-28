@@ -102,10 +102,10 @@
                                       <input class="input_fields" v-model="branch"/>
                                     </div>
 
-                                    <div class="input_field_container_right" >
+                                    <div  class="input_field_container_right" >
                                       <button class="btn btn-light" @click="saveIssue">Save</button>
                                      </div>
-                                     <div class="input_field_container_right" >
+                                     <div v-if="successfulSave" class="input_field_container_right" >
                                       <label>Current Isuse # {{ issueId }}</label>
                                       <button class="btn btn-light" @click="saveIssue">Process </button>
                                      </div>
@@ -183,6 +183,7 @@
        mode : 'new', 
        issueId : '', 
        branch : '',
+       successfulSave : false,
     }
   },
   created() {
@@ -198,6 +199,7 @@
       this.manualtestcasenum = '';
       this.instructions = '';
       this.issueId = '';
+      this.successfulSave = false;
     },
 
     insertKeyword(row){
@@ -276,6 +278,7 @@
 
       var response = await http.post("/issuesApi/createissue", request);      
       this.issueId = response.data
+      this.successfulSave = true;
     },  
     }
   }
