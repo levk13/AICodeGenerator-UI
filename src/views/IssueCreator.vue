@@ -106,7 +106,7 @@
                                       <button class="btn btn-light" @click="saveIssue">Save</button>
                                      </div>
                                      <div v-if="successfulSave" class="input_field_container_right" >
-                                      <label>Current Isuse # {{ issueId }}</label>
+                                      <label id="label">Current Isuse # {{ issueId }}</label>
                                       <button class="btn btn-light" @click="ProcessIssue">Process </button>
                                      </div>
                                
