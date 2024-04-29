@@ -109,13 +109,7 @@
                                       <label id="label">Current Isuse # {{ issueId }}</label>
                                       <button class="btn btn-light" @click="ProcessIssue">Process </button>
                                      </div>
-                               
                                     </div>
-                                  
-                              
-                                  
-                                  
-
                                 </div>
 
                             <div class="collapse" id="collapse-b2" data-bs-parent="#myGroup">
