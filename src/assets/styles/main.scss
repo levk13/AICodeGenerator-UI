@@ -1,0 +1,95 @@
+@import url(http://fonts.googleapis.com/icon?family=Material+Icons);
+@import './_variables.scss';
+@import '~/node_modules/bootstrap/scss/bootstrap.scss';
+@import './code-generator';
+
+
+.main {
+  background: radial-gradient(50% 50% at 50% 50%, $deep-sky 0%, $pacific 41.67%, $cerulean 100%);
+  color: $madison;
+  font-family: $font-default;
+  height: 1000px;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.is-dark {
+  color: $white;
+}
+
+#nav {
+  padding: 2rem;
+  text-align: left;
+}
+
+#nav a {
+  font-weight: bold;
+  color: $madison;
+}
+
+#nav a.router-link-exact-active {
+  color: $sea-green;
+}
+
+#pagecontrol {
+  text-align: left;
+}
+
+h1, h2, h3, .h1, .h2, .h3 {
+  font-family: $font-headings;
+}
+
+.h1 {
+  color: $white;
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.ai-header {
+  margin: 0 !important;
+  max-width: 100%;
+  gap: .5rem;
+}
+
+fieldset {
+  border: 0;
+}
+
+#login {
+  position: fixed;
+  /* center the element */
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+
+  margin-top: 2.5rem;
+  /* give it dimensions */
+  min-height: 10rem;
+  width: 40%;
+}
+
+#div {
+  background-color: inherit
+}
+
+#runbutton {
+  align-items: center;
+  background: #25BCEF;
+  border-radius: 2px;
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  margin-right: .75rem;
+  padding: .75rem;
+}
+
+#center {
+  margin: auto;
+  padding: 10px;
+  float: right;
+  border-width: 1px;
+}

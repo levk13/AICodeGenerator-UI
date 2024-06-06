@@ -1,36 +1,42 @@
 <template>
 
-      <Form @submit="handleLogin" :validation-schema="schema">
-        <div class="form-floating mb-3">
-  
-          <div class="form-group">
-          <Field name="username" type="text" class="form-control" id="floatingInput" placeholder="Email" />
-          <ErrorMessage name="username" class="error-feedback" />
-          </div>
-          <br/>
-        <div class="form-group">
-          <Field name="password" type="password" class="form-control" id="floatingInput" placeholder="Password"/>
-          <ErrorMessage name="password" class="error-feedback" />
+  <Form @submit="handleLogin" :validation-schema="schema">
+    <div class="mb-3">
+
+      <div class="form-group mb-3">
+        <Field name="username"
+          id="username"
+          type="text"
+          placeholder="Email"
+          class="form-control"
+        />
+        <ErrorMessage name="username" class="form-text error-feedback" />
+      </div>
+
+      <div class="form-group mb-3">
+        <Field name="password"
+          id="password"
+          type="password"
+          placeholder="Password"
+          class="form-control"
+        />
+        <ErrorMessage name="password" class="form-text error-feedback" />
+      </div>
+
+      <div>
+        <button class="btn btn-light" :disabled="loading">
+          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+          <span>Login</span>
+        </button>
+      </div>
+
+      <div>
+        <div v-if="message" class="alert alert-warning" role="alert">
+          {{ message }}
         </div>
-        
-    
-        <div id="center">
-          <button  class="btn btn btn-light btn-lg"  :disabled="loading">
-            <span
-              v-show="loading"
-              class="spinner-border spinner-border-sm"
-            ></span>
-            <span>Login</span>
-          </button>
-        </div>
-     <br/><br/><br/><br/>
-        <div>
-          <div v-if="message" class="alert alert-warning" role="alert">
-            {{ message }}
-          </div>
-        </div>
-        </div>
-      </Form>
+      </div>
+    </div>
+  </Form>
 </template>
 
 <script>
@@ -85,12 +91,3 @@ export default {
   },
 };
 </script>
-<style>
-#center {
-margin: auto;
-
-padding: 10px;
-float: right;
-border-width: 1px;
-}
-  </style>

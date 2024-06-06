@@ -1,11 +1,11 @@
 <template>
     <div id="jiraPage">
-     
+
       <div class="d-flex">
       <!-- <button id="runbutton" v-on:click="manageVisibility('test')" >Run Test </button>   -->
-      <button  v-on:click="manageVisibility('add')" id="runbutton">Add New</button>  
+      <button  v-on:click="manageVisibility('add')" id="runbutton">Add New</button>
 
-      
+
       <input v-model="filterKeyword" type="text" @input="handleFilterChange" placeholder="Keyword Search">
       </div>
 
@@ -19,21 +19,21 @@
 
            <textarea rows="10" cols="100" v-model="promptResponse">
            </textarea>
-           <button v-on:click="handleModalClosed()">Close</button>   
+           <button v-on:click="handleModalClosed()">Close</button>
         </div>
-       
+
         <div id="panelDiv" v-if="isAddNewVisible" >
-           <div> 
+           <div>
             <label>Key:</label>
             <input type="text" v-model="addingKey" >
             <label>Value:</label>
             <input type="text" v-model="addingValue">
-            <button  v-on:click="add_record()">Add New </button>   
-            <button  v-on:click="handleModalClosed()">Cancel </button>   
+            <button  v-on:click="add_record()">Add New </button>
+            <button  v-on:click="handleModalClosed()">Cancel </button>
            </div>
         </div>
 
-      </InPageModal> 
+      </InPageModal>
         <div id="table-wrapper"  v-if="isGridVisible" >
         <div id="table-scroll">
         <table class="table table-bordered table-striped">
@@ -50,12 +50,12 @@
         <tbody>
             <tr v-for="row in filterItems" v-bind:key="row.key" >
                 <td>
-                    {{row.data.key}}    
+                    {{row.data.key}}
                 </td>
 
                 <td>
                     <textarea v-show="row.isEditMode" rows="5" cols="50" id="description"  v-model="row.data.value"/>
-                 <label id="description" v-show="!row.isEditMode" v-text="row.data.value"/>  
+                 <label id="description" v-show="!row.isEditMode" v-text="row.data.value"/>
                 </td>
 
                 <td>
@@ -72,40 +72,39 @@
 
 
             </tr>
-        </tbody>   
-        </table> 
+        </tbody>
+        </table>
     </div>
         </div>
     </div>
   </template>
-  
+
   <script>
   import http from '../http-common'
-  import "bootstrap/dist/css/bootstrap.min.css";
   import InPageModal from '../components/InPageModal.vue';
   import {ref} from "vue";
 
   export default {
     name: 'KeywordPrompt',
     components: {InPageModal},
- 
+
   setup(){
     const isOpen = ref(false);
     return {isOpen}
   },
-  
+
   data() {
     return {
         promptkeywords : [],
-        items :[], 
+        items :[],
         filterItems :[],
         selectedItem : '',
         promptResponse : '',
         addingKey : '',
-        addingValue : '', 
-        isGridVisible: true,  
-        isAddNewVisible: false, 
-        isTestVisible: false, 
+        addingValue : '',
+        isGridVisible: true,
+        isAddNewVisible: false,
+        isTestVisible: false,
         filterKeyword: ''
     }
   },
@@ -113,13 +112,13 @@
       this.loadPromptKeywords()
       //this.populateTestItems()
     },
-  
+
   methods: {
-  
+
     handleModalClosed(){
         this.isOpen = false;
-        this.isGridVisible =  true,  
-        this.isAddNewVisible= false, 
+        this.isGridVisible =  true,
+        this.isAddNewVisible= false,
         this.isTestVisible= false
     },
 
@@ -138,11 +137,11 @@
       this.isOpen = true;
       this.isGridVisible = false;
       if(clickBy== "test"){
-        this.isTestVisible = true; 
+        this.isTestVisible = true;
         this.isAddNewVisible = false;
       }
       else {
-        this.isTestVisible = false; 
+        this.isTestVisible = false;
         this.isAddNewVisible = true;
       }
     },
@@ -156,10 +155,10 @@
        }
 
   },
-  
+
     async loadPromptKeywords(){
         const response = await http.get("/promptApi/getall");
-        console.log(response.data) 
+        console.log(response.data)
         for (var i = 0; i < response.data.length; i++){
             var item =  response.data[i]
             this.promptkeywords.push({data:item, isEditMode : false})
@@ -174,22 +173,22 @@
 
     async saveRow(row){
         console.log(row)
-         await http.post("/promptApi/addupdate",row.data); 
+         await http.post("/promptApi/addupdate",row.data);
         row.isEditMode = !row.isEditMode;
     },
- 
+
     async deleteRow(row){
         console.log(row)
-         await http.delete("/promptApi/delete?id="  +row.data.id);    
+         await http.delete("/promptApi/delete?id="  +row.data.id);
          this.loadPromptKeywords();
     },
- 
+
       async run() {
         this.runResult = []
             try{
-                const response = await http.get("/promptApi/test?issue="  + this.selectedItem);      
+                const response = await http.get("/promptApi/test?issue="  + this.selectedItem);
                 this.promptResponse = response.data
-              
+
             }
             catch (error) {
               this.runResult.push("A Processing Error has occured, please check the logs for further details.")
@@ -198,45 +197,45 @@
 
       async add_record(){
         var request = {
-            "key": this.addingKey,  
+            "key": this.addingKey,
             "value": this.addingValue
         }
-         await http.post("/promptApi/addupdate",request); 
-         this.addingKey = ''; 
+         await http.post("/promptApi/addupdate",request);
+         this.addingKey = '';
          this.addingValue = '';
          this.loadPromptKeywords();
          this.handleModalClosed();
       }
-       
+
     }
   }
-  
+
   </script>
   <style src="vue-multiselect/dist/vue-multiselect.css"></style>
-  
+
   <style>
-  
-  
+
+
   .multiselect {
   max-height: 20px;
   margin-right: 10px;
   }
-  
-  
+
+
   .multiselect__select{
     margin-right: 10px;
-  
-  
+
+
   }
-  
+
   .multiselect__tag {
     width: 100px;
     background-color: #25BCEF;
   }
-  
-  
- 
-  
+
+
+
+
   #samp {
     background: #000;
     border: 3px groove #ccc;
@@ -247,7 +246,7 @@
     height: 350px;
     text-align: left;
   }
-  
+
   #panelDiv {
     display: inline-flex;
   padding: 16px;
@@ -258,15 +257,15 @@
   background: rgba(255, 255, 255, 0.70);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   }
-  
+
   #runPan {
   display: flex;
   width: 350px;
   justify-content: space-between;
   align-items: flex-start;
   }
-  
-  
+
+
   #runbutton {
   border-radius: 2px;
   background: #25BCEF;
@@ -277,7 +276,7 @@
   gap: 10px;
   margin-right: 10px;
   }
-  
+
   #clearButton {
   border-radius: 2px;
   background: black;
@@ -288,7 +287,7 @@
   align-items: center;
   gap: 10px;
   }
-  
+
   #tableDiv {
     overflow: scroll;
   }
@@ -343,13 +342,13 @@ background: #FFF;
 margin-right: 10px;
 height: 42px;
 }
-  
+
 #table-wrapper {
   position:relative;
 }
 #table-scroll {
   height:650px;
-  overflow:auto;  
+  overflow:auto;
   margin-top:20px;
 }
 #table-wrapper table {

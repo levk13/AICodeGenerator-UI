@@ -1,0 +1,78 @@
+@import '~/node_modules/vue-multiselect/dist/vue-multiselect.css';
+
+.multiselect {
+  max-height: 20px;
+  margin-right: 10px;
+}
+
+.multiselect__select {
+  margin-right: 10px;
+}
+
+.multiselect__tag {
+  width: 100px;
+  background-color: #25BCEF;
+}
+
+#samp {
+  background: #000;
+  border: 3px groove #ccc;
+  color: #ccc;
+  display: block;
+  padding: 5px;
+  width: 850px;
+  height: 350px;
+  text-align: left;
+}
+
+#panelDiv {
+  display: inline-flex;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.70);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#runPan {
+  display: flex;
+  width: 350px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#runbutton {
+  border-radius: 2px;
+  background: #25BCEF;
+  display: flex;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-right: 10px;
+}
+
+#clearButton {
+  border-radius: 2px;
+  background: black;
+  color: white;
+  display: flex;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#jiraItems {
+  display: flex;
+  padding: 6px 12px;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  border: 1px solid #000;
+  background: #FFF;
+  margin-right: 10px;
+  height: 42px;
+}
