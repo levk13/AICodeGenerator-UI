@@ -1,8 +1,7 @@
 <template>
-  <div id="app" class="main">
-
-    <div id="div">
-      <LoginOld id="login" />
+  <div class="c-home">
+    <div>
+      <LoginOld />
     </div>
   </div>
 </template>

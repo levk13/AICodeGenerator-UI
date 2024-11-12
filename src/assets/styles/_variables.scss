@@ -13,9 +13,16 @@ $deep-sky: #05C1FC;
 $pacific: #009ECF;
 $cerulean: #00789D;
 $sea-green: #42b983;
+$firefly: #0b2331;
 
 /**
 * Sizing
 */
 
 $max-w-login: 18.75rem;
+
+
+[data-bs-theme=dark] {
+  --bs-body-bg: $firefly !important;
+  // --bs-table-bg: yellow !important;
+}

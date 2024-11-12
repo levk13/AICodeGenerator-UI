@@ -1,30 +1,30 @@
 <template>
 
-  <div id="app" class="main">
-    <div id="AIHeader" class="ai-header" v-if="loggedIn">
-      <LoggedUserheader></LoggedUserheader>
+  <div class="main" data-bs-theme="dark">
+
+    <div class="flex-shrink-0">
+      <div id="AIHeader" class="ai-header mt-5" v-if="loggedIn">
+        <LoggedUserheader></LoggedUserheader>
+      </div>
+
+      <div class="content">
+        <router-view />
+      </div>
     </div>
-
-    <div><img alt="Scigon Labs" src="./assets/ScigonLabsLogo.svg"></div>
-
-    <div>
-      <img alt="Scigon Labs" src="./assets/AILogo.svg">
-      <h1 class="h1">Test Automation Framework</h1>
-    </div>
-
-    <div class="content">
-      <router-view />
-    </div>
-
+    <div class="flex-grow-1"></div>
+    <Footer />
   </div>
+
 </template>
 
 <script>
 import LoggedUserheader from './components/LoggedUserheader.vue';
+import Footer from './components/Footer.vue';
 
 export default {
   components: {
-    LoggedUserheader
+    LoggedUserheader,
+    Footer,
   },
   data() {
     return {

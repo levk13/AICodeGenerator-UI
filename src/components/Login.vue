@@ -1,7 +1,7 @@
 <template>
 
 
-  <div>
+  <div class="c-login">
     <form @submit="handleLogin()">
       <div class="mb-3">
         <input v-model="user.username"
@@ -87,3 +87,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.c-login {
+  max-width: 18.75rem;
+}
+</style>

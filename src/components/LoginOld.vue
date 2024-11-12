@@ -1,42 +1,55 @@
 <template>
+  <div class="c-login">
 
-  <Form @submit="handleLogin" :validation-schema="schema">
-    <div class="mb-3">
-
-      <div class="form-group mb-3">
-        <Field name="username"
-          id="username"
-          type="text"
-          placeholder="Email"
-          class="form-control"
-        />
-        <ErrorMessage name="username" class="form-text error-feedback" />
+    <div class="d-flex">
+      <div class="scigon-logo my-5">
+        <img class="scigon-logo__image" alt="Scigon Labs" src="../assets/ScigonLabsLogo.svg">
       </div>
 
-      <div class="form-group mb-3">
-        <Field name="password"
-          id="password"
-          type="password"
-          placeholder="Password"
-          class="form-control"
-        />
-        <ErrorMessage name="password" class="form-text error-feedback" />
-      </div>
-
-      <div>
-        <button class="btn btn-light" :disabled="loading">
-          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-          <span>Login</span>
-        </button>
-      </div>
-
-      <div>
-        <div v-if="message" class="alert alert-warning" role="alert">
-          {{ message }}
-        </div>
+      <div class="testwyze-logo mt-5 mb-5 mx-auto">
+        <img class="testwyze-logo__image" alt="Scigon Labs" src="../assets/AILogo.svg">
+        <h1 class="h1 heading mb-0">Test Automation Framework</h1>
       </div>
     </div>
-  </Form>
+
+    <Form @submit="handleLogin" :validation-schema="schema">
+      <div class="mb-3">
+
+        <div class="form-group mb-3">
+          <Field name="username"
+            id="username"
+            type="text"
+            placeholder="Email"
+            class="form-control"
+          />
+          <ErrorMessage name="username" class="form-text invalid-feedback" />
+        </div>
+
+        <div class="form-group mb-3">
+          <Field name="password"
+            id="password"
+            type="password"
+            placeholder="Password"
+            class="form-control"
+          />
+          <ErrorMessage name="password" class="form-text invalid-feedback" />
+        </div>
+
+        <div>
+          <button class="btn btn-light" :disabled="loading">
+            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+            <span>Login</span>
+          </button>
+        </div>
+
+        <div>
+          <div v-if="message" class="alert alert-warning" role="alert">
+            {{ message }}
+          </div>
+        </div>
+      </div>
+    </Form>
+  </div>
 </template>
 
 <script>
@@ -91,3 +104,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .c-login {
+    max-width: 18.75rem;
+    margin: 0 auto;
+  }
+
+</style>
