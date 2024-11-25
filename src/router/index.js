@@ -5,6 +5,8 @@ import store from '@/store/index';
 import KeywordPrompt from '../views/KeywordPrompt'
 import IssueCreator  from "../views/IssueCreator.vue";
 import WorkflowManager from '../views/WorkflowManager'
+import TestPage from '../views/TestPage';
+
 const routes = [
  {
     path: "/",
@@ -51,19 +53,32 @@ const routes = [
         }
       }
     },
-    {
+  {
     path: "/workflowmanager",
     name: "workflowmanager",
     component: WorkflowManager,
     beforeEnter(to, from, next) {
-        if (store.state.auth.status.loggedIn) {
-            next();
-          }
-         else {
-          next('/');
+      if (store.state.auth.status.loggedIn) {
+          next();
         }
+        else {
+        next('/');
       }
-    },
+    }
+  },
+  {
+    path: "/test",
+    name: "TestPage",
+    component: TestPage,
+    beforeEnter(to, from, next) {
+      if (store.state.auth.status.loggedIn) {
+          next();
+        }
+        else {
+        next('/');
+      }
+    }
+  },
 ];
 
 
@@ -82,4 +97,4 @@ router.afterEach((to, from, failure) => {
     }
   })
 
-  export default router 
+  export default router
