@@ -1,0 +1,156 @@
+@use 'sass:color';
+
+@import url(http://fonts.googleapis.com/icon?family=Material+Icons);
+
+@import './_variables.scss';
+@import './_utilities';
+@import '~/node_modules/bootstrap/scss/bootstrap.scss';
+@import '~/node_modules/bootstrap-icons/font/bootstrap-icons.css';
+
+@import './code-generator';
+
+
+
+
+html, body {
+  height: 100% !important;
+}
+
+body {
+
+}
+
+.outer-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap;
+  height: 100% !important;
+}
+
+.main {
+  height: 100%;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap;
+  color: $madison;
+  font-family: $font-default;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $firefly;
+}
+
+.ai-header,
+.scigon-logo,
+.testwyze-logo {
+  margin: 0 auto;
+}
+
+.ai-header,
+.testwyze-logo {
+  max-width: 18.75rem;
+}
+
+.scigon-logo {
+  max-width: 12rem;
+}
+
+.testwyze-logo {
+  display: flex;
+  align-items: center;
+
+  h1 {
+    font-size: 1.5rem;
+    white-space: nowrap;
+  }
+
+  img {
+    margin-right: 1rem;
+  }
+}
+
+.is-dark {
+  color: $white;
+}
+
+#nav {
+  padding: 2rem;
+  text-align: left;
+}
+
+#nav a {
+  font-weight: bold;
+  color: $madison;
+}
+
+#nav a.router-link-exact-active {
+  color: $sea-green;
+}
+
+#pagecontrol {
+  text-align: left;
+}
+
+h1, h2, h3, .h1, .h2, .h3 {
+  font-family: $font-headings;
+}
+
+.h1 {
+  color: $white;
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.ai-header {
+  margin: 0 !important;
+  max-width: 100%;
+  gap: .5rem;
+}
+
+fieldset {
+  border: 0;
+}
+
+#login {
+  position: fixed;
+  /* center the element */
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+
+  margin-top: 2.5rem;
+  /* give it dimensions */
+  min-height: 10rem;
+  width: 40%;
+}
+
+#div {
+  background-color: inherit
+}
+
+
+#center {
+  margin: auto;
+  padding: 10px;
+  float: right;
+  border-width: 1px;
+}
+
+.heading {
+  font-family: $font-headings;
+}
+
+.user-nav {
+  @media screen and (min-width: 768px) {
+    margin-left: 4.5rem;
+  }
+}
+
+.instructions-test {
+  height: 36rem;
+  background-color: #071821;
+  border-color: color.scale(#495057, $lightness: -40%);
+  padding: 1rem;
+}

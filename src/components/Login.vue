@@ -1,48 +1,59 @@
 <template>
 
 
-<div>
+  <div class="c-login">
     <form @submit="handleLogin()">
-        <div class="form-floating mb-3">
-  <input  v-model="user.username"  type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-  <label for="floatingInput">Email address</label>
-</div>
-<div class="form-floating">
-  <input v-model="user.password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-  <label for="floatingPassword">Password</label>
-</div>
+      <div class="mb-3">
+        <input v-model="user.username"
+          id="email"
+          type="email"
+          placeholder="name@example.com"
+          class="form-control">
+        <label for="email">Email address</label>
+      </div>
+      <div class="">
+        <input v-model="user.password"
+          id="password"
+          type="password"
+          placeholder="Password"
+          class="form-control">
+        <label for="password">Password</label>
+      </div>
 
 
-<div class="form-floating">
-  <input v-model="user.key" type="text" class="form-control" id="floatingInput" placeholder="License Key">
-  <!-- <label for="floatingPassword">License Key</label> -->
-</div>
+      <div class="">
+        <input v-model="user.key"
+          id="license-key"
+          type="text"
+          placeholder="License Key"
+          class="form-control">
+        <!-- <label for="floatingPassword">License Key</label> -->
+      </div>
 
-<div  id="center">
-    <button  class="btn btn btn-light btn-lg" type="submit">Submit</button>  
- 
+      <div id="center">
+        <button class="btn btn btn-light btn-lg" type="submit">Submit</button>
+      </div>
+
+
+    </form>
   </div>
+</template>
+
+<script>
 
 
-</form>
-    </div>
-  </template>
-  
-  <script>
+export default {
+  data() {
+    return {
+      user: {
+        username: '',
+        password: ''
+      },
 
-
-    export default {
-      data() {
-        return {
-          user: {
-            username: '',
-            password: ''
-          },
-         
-          show: true
-        }
-    },
-    computed: {
+      show: true
+    }
+  },
+  computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
     },
@@ -56,10 +67,10 @@
     handleLogin() {
       console.log("calling Router")
       this.loading = true;
- 
+
       this.$store.dispatch("auth/login", this.user).then(
         () => {
-        
+
           this.$router.push("/testrunner");
         },
         (error) => {
@@ -76,14 +87,9 @@
   }
 }
 </script>
-      <style>
-    #center {
-  margin: auto;
 
-  padding: 10px;
-  float: right;
-  border-width: 1px;
+<style lang="scss">
+.c-login {
+  max-width: 18.75rem;
 }
-      </style>
-
-      
+</style>

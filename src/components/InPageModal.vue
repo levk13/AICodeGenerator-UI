@@ -2,7 +2,7 @@
      <transition name="fade">
         <div class="vue-modal" v-show="open">
         <div class ="vue-modal-content">
-    
+
             <br/>
             <slot/>
         </div>
@@ -14,10 +14,10 @@
 
 <script>
 
-export default{ 
+export default{
     props: {
         open : {
-            type: Boolean, 
+            type: Boolean,
             required: true
         }
     }
@@ -35,29 +35,29 @@ export default{
 }
 
 .vue-modal {
-  position: fixed;
+  /* position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-   background-color: rgba(0, 0, 0, 0.4); 
-  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1; */
 }
 
 .vue-modal-inner {
-  max-width: 500px;
-  margin: 2rem auto;
+  /* max-width: 500px;
+  margin: 2rem auto; */
 }
 
 .vue-modal-content {
-  position: relative;
+  /* position: relative;
   background: radial-gradient(50% 50% at 50% 50%, #05C1FC 0%, #009ECF 41.67%, #00789D 100%);
-  border: 1px solid rgba(15, 2, 2, 0.3); 
+  border: 1px solid rgba(15, 2, 2, 0.3);
   background-clip: padding-box;
   border-radius: 0.3rem;
-  padding: 1rem;
+  padding: 1rem; */
 }
 
 .fade-enter-active,
@@ -70,15 +70,5 @@ export default{
   opacity: 0;
 }
 
-#runbutton {
-  border-radius: 2px;
-  background: #25BCEF;
-  display: flex;
-  padding: 12px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-right: 10px;
-  }
 
 </style>
